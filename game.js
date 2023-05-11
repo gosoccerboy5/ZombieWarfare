@@ -12,7 +12,7 @@ let zombie = load("assets/zombie.png");
 let damage = load("assets/damage.png");
 
 let cameraAngle = Math.PI/4, lastPos = playerPos = [-47.5, -47.5], horizonPoint = canvas.height * .5, cameraPitch = 0,
-	fov = Math.PI/3, velocity = new Vector2d(0, 0), playerRadius = 1.5, 
+	fov = Math.PI/2.5, velocity = new Vector2d(0, 0), playerRadius = 1.5, 
 	fireMode = 0, recoilFactor = 0, cooldown = 0,
 	ammo = maxammo = 30, reloading = false, reloadTime = 70, reloadStart = null,
 	radarFogFactor = 30, health = 100,
@@ -520,7 +520,14 @@ function updateFrame() {
 		reloading = false;
 	}
 	drawBloom(bloom);
+	minimap.add(() => {ctx.fillStyle = "lightgreen";ctx.fillRect(95, 95, 5, 5);});
 	minimap.draw();
+	ctx.fillStyle = "beige"; ctx.beginPath(); ctx.roundRect(0, 110, 110, 30, 3); ctx.fill();
+	ctx.font = "10px Helvetica";
+	ctx.fillStyle = "black";
+	ctx.fillText("Objective: reach target", 55, 122);
+	ctx.fillText("(marked in green)", 55, 135);
+	
 	damages.draw();
 	ctx.fillStyle = "black";
 	ctx.lineWidth = 2;
@@ -566,5 +573,5 @@ let volumeSlider = new Slider(canvas.width/2-75, 400, canvas.width/2+125, percen
 
 let sas = load("assets/sas.png"), zombieMenu = load("assets/zombie-menu.png");
 menuImages.push({image: sas, left: -50, top: 0});
-menuImages.push({image: zombieMenu, left: canvas.width-300, top: 0, height: 500, width: 350});
+menuImages.push({image: zombieMenu, left: canvas.width-330, top: 0, height: 500, width: 350});
 
