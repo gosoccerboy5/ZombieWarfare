@@ -241,7 +241,7 @@ canvas.addEventListener("mousedown", function(e) {
 		gameState = "menu";
 	}
 });
-canvas.addEventListener("mouseup", function(e) {
+document.addEventListener("mouseup", function(e) {
 	if (gameState === "playing") {
 		onMouseUp();
 	}
@@ -269,6 +269,7 @@ document.addEventListener("keydown", function(e) {
 			resume.visible = true;
 		} else {
 			animating = false;
+			resume.visible = false;
 		}
 	}
 });

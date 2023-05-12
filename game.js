@@ -445,7 +445,8 @@ function updateFrame() {
 			ctx.drawImage(cloud, projected.x * canvas.width - cloud.width/2, horizonPoint - projected.distance * 20 - cloud.height/2, size, size);
 		}
 	}
-	let minChunkSize = 0.2, maxChunkSize = 5, distFactor = 1/15;
+	let graphicsQuality = graphicsSlider.percent;
+	let minChunkSize = 0.7-graphicsQuality*0.5, maxChunkSize = 5, distFactor = 1/(7.5*(graphicsQuality+1));
 	let renderableWalls = walls.map(wall => generateSmallerWallChunks(wall, 5).map(chunk => 
 		generateSmallerWallChunks(chunk, Math.min(minChunkSize+Math.min(getDistance(...wall[0], ...playerPos), getDistance(...wall[1], ...playerPos))*distFactor, maxChunkSize)))).flat(2);
 	for (let wall of renderableWalls) {
@@ -486,7 +487,7 @@ function updateFrame() {
 			enemy.activated = true;
 		}
 		if (enemy.activated) enemy.update();
-		if (projected.zDistance < 0.5) continue;
+		if (projected.zDistance < 0.7) continue;
 		renderScheduler.schedule(projected.distance, enemy.pos, () => ctx.drawImage(zombie, projected.x*canvas.width-canvas.width/projected.zDistance*0.7/2, horizonPoint+sizeFactor*(1-heightPercent)/projected.zDistance - canvas.height/projected.zDistance*2, canvas.width/projected.zDistance*0.7, canvas.height/projected.zDistance*2));
 	}
 	renderScheduler.execute();
@@ -570,6 +571,7 @@ let resume = new Button(canvas.width/2-50, 200, 150, 75, "lightgrey", {value: "R
 resume.visible = false;
 let sens = new Slider(canvas.width/2-75, 350, canvas.width/2+125, percent => `Mouse sensitivity: ${Math.round(percent*100)}%`);
 let volumeSlider = new Slider(canvas.width/2-75, 400, canvas.width/2+125, percent => `Volume: ${Math.round(percent*100)}%`);
+let graphicsSlider = new Slider(canvas.width/2-75, 450, canvas.width/2+125, percent => `Graphics quality: ${Math.round(percent*100)}%`);
 
 let sas = load("assets/sas.png"), zombieMenu = load("assets/zombie-menu.png");
 menuImages.push({image: sas, left: -50, top: 0});
