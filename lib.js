@@ -252,7 +252,8 @@ canvas.addEventListener("mousemove", function(e) {
 		onMouseMove(e.movementX*mouseSens, e.movementY*mouseSens);
 	}
 	let cvsBdngRect = canvas.getBoundingClientRect();
-	mousePos = [e.clientX - cvsBdngRect.left, e.clientY - cvsBdngRect.top];
+	mousePos = [(e.clientX - cvsBdngRect.left)*canvas.width/Number(getComputedStyle(canvas).width.replace("px", "")), (e.clientY - cvsBdngRect.top)*canvas.height/Number(getComputedStyle(canvas).height.replace("px", ""))];
+	//adjusts for differences in the canvas's visual width/height and represented width/height
 });
 let keys = {};
 document.addEventListener("keydown", function(e) {
